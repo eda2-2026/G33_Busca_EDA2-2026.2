@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resultados - Biblioteca Virtual</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar">
+      <a href="{{ url_for('index') }}">Biblioteca Virtual</a>
+    </nav>
+
+    <section class="content">
+      <p class="eyebrow">Busca por {{ tipo_busca }}</p>
+      <h1>Resultados para "{{ termo }}"</h1>
+
+      {% if resultados %}
+        <div class="book-grid">
+          {% for livro in resultados %}
+            <article class="book-card">
+              {% if livro.capa %}
+                <img src="{{ livro.capa }}" alt="Capa de {{ livro.titulo }}" loading="lazy">
+              {% else %}
+                <div class="cover-placeholder">Sem capa</div>
+              {% endif %}
+              <div>
+                <h2>{{ livro.titulo or "Informação não disponível" }}</h2>
+                <p>{{ livro.autor or "Informação não disponível" }}</p>
+                <p>{{ livro.ano or "Ano não disponível" }}</p>
+                {% if livro.isbn or livro.id %}
+                  <a class="button-link" href="{{ url_for('detalhe_livro', identificador=livro.isbn or livro.id) }}">Ver detalhes</a>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">Livro não encontrado.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>
