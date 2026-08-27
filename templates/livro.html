@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ livro.titulo }} - Biblioteca Virtual</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar">
+      <a href="{{ url_for('index') }}">Biblioteca Virtual</a>
+    </nav>
+
+    <section class="book-detail">
+      <div class="cover-frame">
+        {% if livro.capa %}
+          <img src="{{ livro.capa }}" alt="Capa de {{ livro.titulo }}">
+        {% else %}
+          <div class="cover-placeholder large">Sem capa</div>
+        {% endif %}
+      </div>
+
+      <div class="detail-text">
+        <h1>{{ livro.titulo or "Informação não disponível" }}</h1>
+        <p class="author">{{ livro.autor or "Informação não disponível" }}</p>
+        <dl>
+          <div>
+            <dt>Ano</dt>
+            <dd>{{ livro.ano or "Informação não disponível" }}</dd>
+          </div>
+          <div>
+            <dt>ISBN</dt>
+            <dd>{{ livro.isbn or "Informação não disponível" }}</dd>
+          </div>
+        </dl>
+
+        <h2>Descrição</h2>
+        <p>{{ livro.descricao or "Informação não disponível" }}</p>
+
+        {% if livro.work_id %}
+          <a class="button-link" href="https://openlibrary.org{{ livro.work_id }}" target="_blank" rel="noreferrer">Abrir na Open Library</a>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="content related">
+      <h2>Você também pode gostar</h2>
+      {% if sugestoes %}
+        <div class="book-grid compact">
+          {% for sugestao in sugestoes %}
+            <article class="book-card">
+              {% if sugestao.capa %}
+                <img src="{{ sugestao.capa }}" alt="Capa de {{ sugestao.titulo }}" loading="lazy">
+              {% else %}
+                <div class="cover-placeholder">Sem capa</div>
+              {% endif %}
+              <div>
+                <h3>{{ sugestao.titulo or "Informação não disponível" }}</h3>
+                <p>{{ sugestao.autor or "Informação não disponível" }}</p>
+                {% if sugestao.isbn or sugestao.id %}
+                  <a class="text-link" href="{{ url_for('detalhe_livro', identificador=sugestao.isbn or sugestao.id) }}">Ver livro</a>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">Nenhuma sugestão relacionada encontrada.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>
