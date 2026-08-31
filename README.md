@@ -4,6 +4,12 @@ MVP de Biblioteca Virtual Web em Python, Flask, HTML, CSS, Requests e JSON.
 
 O sistema usa a Open Library apenas para alimentar o `catalogo.json`. As buscas feitas pelo usuário acontecem localmente no catálogo.
 
+## Entrega do Trabalho 1
+
+|                                         Trabalho                                         | Entrega | Tema  |
+| :--------------------------------------------------------------------------------------: | :-----: | :---: |
+| [T1](https://drive.google.com/file/d/1pKy9ysnI-MyKj8XTFqXxKGw2kr-8ZD9u/view?usp=sharing) |  31/08  | Busca |
+
 ## Como executar
 
 ```bash
